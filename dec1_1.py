@@ -1,5 +1,5 @@
 input = []
-with open('input_1_1.txt') as input_file:
+with open('input_1.txt') as input_file:
     for line in input_file:
         input.append(int(line.strip()))
 
