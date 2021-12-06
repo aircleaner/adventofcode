@@ -4,7 +4,6 @@ def read_input(path):
     board_id = -1
     with open(path) as input_file:
         for i, line in enumerate(input_file):
-            # print(f'{i}: "{line.strip()}"')
             if i == 0:
                 numbers = [int(v) for v in line.strip().split(',')]
             elif line == "\n":
@@ -62,6 +61,25 @@ def part1(numbers, boards):
     return None
 
 
+def part2(numbers, boards):
+    last_bingo_board = []
+    last_bingo_num = None
+    for num in numbers:
+        boards = mark_number(num, boards)
+        while True:
+            bingo_index = has_bingo(boards)
+            if bingo_index != None:
+                if len(boards) == 1:
+                    return board_sum(boards[bingo_index]) * num
+                else:
+                    last_bingo_board = boards[bingo_index]
+                    last_bingo_num = num
+                    del boards[bingo_index]
+            else:
+                break
+    return board_sum(last_bingo_board) * last_bingo_num
+
+
 if __name__ == '__main__':
     numbers, boards = read_input('input_4_test.txt')
     # print(numbers)
@@ -73,3 +91,7 @@ if __name__ == '__main__':
     numbers, boards = read_input('input_4.txt')
     result = part1(numbers, boards)
     print(f"part1 result: {result}")
+
+    numbers, boards = read_input('input_4.txt')
+    result = part2(numbers, boards)
+    print(f"part2 result: {result}")
